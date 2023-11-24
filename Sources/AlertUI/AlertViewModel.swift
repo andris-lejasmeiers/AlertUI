@@ -24,11 +24,32 @@ public struct AlertViewModel: AlertViewModelProtocol {
   public let title: String?
   public let message: String?
   public let actions: [AlertViewModelActionProtocol]
+  public let preferredAction: AlertViewModelActionProtocol?
 
-  public init(title: String?, message: String? = nil, actions: [Action] = []) {
+  public init(
+    title: String?,
+    message: String? = nil,
+    actions: [AlertViewModelActionProtocol] = [],
+    preferredAction: AlertViewModelActionProtocol? = nil
+  ) {
     self.title = title
     self.message = message
     self.actions = actions
+    self.preferredAction = preferredAction
+  }
+}
+
+public extension AlertViewModel {
+  init(
+    title: String?,
+    message: String? = nil,
+    actions: [Action] = [],
+    preferredAction: Action? = nil
+  ) {
+    self.title = title
+    self.message = message
+    self.actions = actions
+    self.preferredAction = preferredAction
   }
 }
 

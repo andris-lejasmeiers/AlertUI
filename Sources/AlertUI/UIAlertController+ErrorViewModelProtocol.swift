@@ -15,6 +15,9 @@ public extension UIAlertController {
     viewModel.actions.forEach {
       addAction(.init(action: $0))
     }
+    if let action = viewModel.preferredAction {
+      preferredAction = .init(action: action)
+    }
   }
 }
 

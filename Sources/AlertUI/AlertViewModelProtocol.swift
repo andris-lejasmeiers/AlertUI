@@ -10,6 +10,7 @@ public protocol AlertViewModelProtocol {
   var title: String? { get }
   var message: String? { get }
   var actions: [AlertViewModelActionProtocol] { get }
+  var preferredAction: AlertViewModelActionProtocol? { get }
 }
 
 public protocol AlertViewModelActionProtocol {
