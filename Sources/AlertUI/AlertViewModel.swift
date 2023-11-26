@@ -9,24 +9,31 @@
 import Foundation
 
 public struct AlertViewModel: AlertViewModelProtocol {
-  public struct Action: AlertViewModelActionProtocol {
+  public struct Action: ActionProtocol {
     public let title: String?
-    public let style: AlertViewModelActionStyle
+    public let style: ActionStyle
+    public var isPreferred: Bool
     public let handler: (() -> Void)?
 
-    public init(title: String?, style: AlertViewModelActionStyle, handler: (() -> Void)?) {
+    public init(
+      title: String?,
+      style: ActionStyle = .default,
+      isPreferred: Bool = false,
+      handler: (() -> Void)?
+    ) {
       self.title = title
       self.style = style
+      self.isPreferred = isPreferred
       self.handler = handler
     }
   }
 
-  public struct TextField: AlertViewModelTextFieldProtocol {
+  public struct TextField: TextFieldProtocol {
     public let placeholder: String?
     public let text: String?
-    public let keyboardType: AlertViewModelTextFieldKeyboardType
+    public let keyboardType: KeyboardType
     public let isSecureTextEntry: Bool
-    public let textContentType: String?
+    public let textContentType: ContentType?
     public let clearButtonMode: ViewMode
     public let accessibilityLabel: String?
     public let accessibilityHint: String?
@@ -41,12 +48,12 @@ public struct AlertViewModel: AlertViewModelProtocol {
     public var shouldClear: ((String?) -> Bool)? = nil
     public var shouldReturn: ((String?) -> Bool)? = nil
 
-    init(
+    public init(
       placeholder: String? = nil,
       text: String? = nil,
-      keyboardType: AlertViewModelTextFieldKeyboardType = .default,
-      isSecureTextEntry: Bool,
-      textContentType: String? = nil,
+      keyboardType: KeyboardType = .default,
+      isSecureTextEntry: Bool = false,
+      textContentType: ContentType? = nil,
       clearButtonMode: ViewMode = .never,
       accessibilityLabel: String? = nil,
       accessibilityHint: String? = nil,
@@ -80,21 +87,18 @@ public struct AlertViewModel: AlertViewModelProtocol {
 
   public let title: String?
   public let message: String?
-  public let actions: [AlertViewModelActionProtocol]
-  public let preferredAction: AlertViewModelActionProtocol?
-  public let textFields: [AlertViewModelTextFieldProtocol]
+  public let actions: [ActionProtocol]
+  public let textFields: [TextFieldProtocol]
 
   public init(
     title: String?,
     message: String? = nil,
-    actions: [AlertViewModelActionProtocol] = [],
-    preferredAction: AlertViewModelActionProtocol? = nil,
-    textFields: [AlertViewModelTextFieldProtocol] = []
+    actions: [ActionProtocol] = [],
+    textFields: [TextFieldProtocol] = []
   ) {
     self.title = title
     self.message = message
     self.actions = actions
-    self.preferredAction = preferredAction
     self.textFields = textFields
   }
 }
@@ -104,20 +108,18 @@ public extension AlertViewModel {
     title: String?,
     message: String? = nil,
     actions: [Action] = [],
-    preferredAction: Action? = nil,
     textFields: [TextField] = []
   ) {
     self.title = title
     self.message = message
     self.actions = actions
-    self.preferredAction = preferredAction
     self.textFields = textFields
   }
 }
 
 public extension AlertViewModel.Action {
   init(title: String, retry handler: @escaping () -> Void) {
-    self.init(title: title, style: .default, handler: handler)
+    self.init(title: title, handler: handler)
   }
 
   init(title: String, dismiss handler: (() -> Void)?) {

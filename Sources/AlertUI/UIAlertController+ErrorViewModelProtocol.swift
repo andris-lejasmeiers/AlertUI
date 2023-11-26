@@ -14,10 +14,11 @@ public extension UIAlertController {
   convenience init(viewModel: AlertViewModelProtocol, style: Style) {
     self.init(title: viewModel.title, message: viewModel.message, preferredStyle: style)
     viewModel.actions.forEach {
-      addAction(.init(action: $0))
-    }
-    if let model = viewModel.preferredAction {
-      preferredAction = .init(action: model)
+      let action = UIAlertAction(action: $0)
+      addAction(action)
+      if $0.isPreferred {
+        preferredAction = action
+      }
     }
     viewModel.textFields.forEach { model in
       addTextField {
@@ -26,7 +27,7 @@ public extension UIAlertController {
         $0.keyboardType = .init(type: model.keyboardType)
         $0.isSecureTextEntry = model.isSecureTextEntry
         if let type = model.textContentType {
-          $0.textContentType = .init(rawValue: type)
+          $0.textContentType = .init(type: type)
         }
         $0.clearButtonMode = .init(mode: model.clearButtonMode)
         $0.accessibilityLabel = model.accessibilityLabel
@@ -38,7 +39,7 @@ public extension UIAlertController {
 }
 
 public extension UIAlertAction {
-  convenience init(action: AlertViewModelActionProtocol) {
+  convenience init(action: ActionProtocol) {
     self.init(
       title: action.title,
       style: .init(style: action.style)
@@ -49,13 +50,13 @@ public extension UIAlertAction {
 }
 
 public extension UIAlertAction.Style {
-  init(style: AlertViewModelActionStyle) {
+  init(style: ActionStyle) {
     self = Self(rawValue: style.rawValue) ?? .default
   }
 }
 
 public extension UIKeyboardType {
-  init(type: AlertViewModelTextFieldKeyboardType) {
+  init(type: KeyboardType) {
     switch type {
     case .default:
       self = .default
@@ -100,10 +101,71 @@ public extension UITextField.ViewMode {
   }
 }
 
-private class DelegateProxy: NSObject, UITextFieldDelegate {
-  private let delegate: AlertViewModelTextFieldProtocol
+public extension UITextContentType {
+  init(type: ContentType) {
+    switch type {
+    case .name:
+      self = Self.name
+    case .namePrefix:
+      self = Self.namePrefix
+    case .givenName:
+      self = Self.givenName
+    case .middleName:
+      self = Self.middleName
+    case .familyName:
+      self = Self.familyName
+    case .nameSuffix:
+      self = Self.nameSuffix
+    case .nickname:
+      self = Self.nickname
+    case .jobTitle:
+      self = Self.jobTitle
+    case .organizationName:
+      self = Self.organizationName
+    case .location:
+      self = Self.location
+    case .fullStreetAddress:
+      self = Self.fullStreetAddress
+    case .streetAddressLine1:
+      self = Self.streetAddressLine1
+    case .streetAddressLine2:
+      self = Self.streetAddressLine2
+    case .addressCity:
+      self = Self.addressCity
+    case .addressState:
+      self = Self.addressState
+    case .addressCityAndState:
+      self = Self.addressCityAndState
+    case .sublocality:
+      self = Self.sublocality
+    case .countryName:
+      self = Self.countryName
+    case .postalCode:
+      self = Self.postalCode
+    case .telephoneNumber:
+      self = Self.telephoneNumber
+    case .emailAddress:
+      self = Self.emailAddress
+    case .URL:
+      self = Self.URL
+    case .creditCardNumber:
+      self = Self.creditCardNumber
+    case .username:
+      self = Self.username
+    case .password:
+      self = Self.password
+    case .newPassword:
+      self = Self.newPassword
+    case .oneTimeCode:
+      self = Self.oneTimeCode
+    }
+  }
+}
 
-  init(delegate: AlertViewModelTextFieldProtocol) {
+private class DelegateProxy: NSObject, UITextFieldDelegate {
+  private let delegate: TextFieldProtocol
+
+  init(delegate: TextFieldProtocol) {
     self.delegate = delegate
   }
 

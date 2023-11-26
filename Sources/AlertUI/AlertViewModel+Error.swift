@@ -86,7 +86,7 @@ public extension AlertViewModel {
   }
 }
 
-private extension AlertViewModelActionStyle {
+private extension ActionStyle {
   init(recoveryOptionType: RecoveryOptionType?) {
     switch recoveryOptionType {
     case .cancel:
