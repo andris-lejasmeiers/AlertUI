@@ -89,17 +89,23 @@ public struct AlertViewModel: AlertViewModelProtocol {
   public let message: String?
   public let actions: [ActionProtocol]
   public let textFields: [TextFieldProtocol]
+  public let style: AlertStyle
+  public let severity: AlertSeverity
 
   public init(
     title: String?,
     message: String? = nil,
     actions: [ActionProtocol] = [],
-    textFields: [TextFieldProtocol] = []
+    textFields: [TextFieldProtocol] = [],
+    style: AlertStyle = .alert,
+    severity: AlertSeverity = .informational
   ) {
     self.title = title
     self.message = message
     self.actions = actions
     self.textFields = textFields
+    self.style = style
+    self.severity = severity
   }
 }
 
@@ -108,12 +114,16 @@ public extension AlertViewModel {
     title: String?,
     message: String? = nil,
     actions: [Action] = [],
-    textFields: [TextField] = []
+    textFields: [TextField] = [],
+    style: AlertStyle = .alert,
+    severity: AlertSeverity = .informational
   ) {
     self.title = title
     self.message = message
     self.actions = actions
     self.textFields = textFields
+    self.style = style
+    self.severity = severity
   }
 }
 

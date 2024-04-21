@@ -11,16 +11,23 @@ import Foundation
 import UIKit
 
 public extension UIAlertController {
-  convenience init(viewModel: AlertViewModelProtocol, style: Style) {
-    self.init(title: viewModel.title, message: viewModel.message, preferredStyle: style)
-    viewModel.actions.forEach {
-      let action = UIAlertAction(action: $0)
+  convenience init(viewModel: AlertViewModelProtocol) {
+    self.init(
+      title: viewModel.title,
+      message: viewModel.message,
+      preferredStyle: .init(style: viewModel.style)
+    )
+    if #available(iOS 16.0, *) {
+      severity = .init(severity: viewModel.severity)
+    }
+    for item in viewModel.actions {
+      let action = UIAlertAction(action: item)
       addAction(action)
-      if $0.isPreferred {
+      if item.isPreferred {
         preferredAction = action
       }
     }
-    viewModel.textFields.forEach { model in
+    for model in viewModel.textFields {
       addTextField {
         $0.placeholder = model.placeholder
         $0.text = model.text
@@ -34,6 +41,40 @@ public extension UIAlertController {
         $0.accessibilityHint = model.accessibilityHint
         $0.setDelegate(proxy: .init(delegate: model))
       }
+    }
+  }
+}
+
+public extension UIAlertController.Style {
+  init(style: AlertStyle) {
+    self = switch style {
+    case .actionSheet:
+      .actionSheet
+    case .alert,
+         .currentContext,
+         .custom,
+         .formSheet,
+         .fullScreen,
+         .overCurrentContext,
+         .overFullScreen,
+         .pageSheet,
+         .popover:
+      .alert
+    }
+  }
+}
+
+@available(iOS 16.0, *)
+public extension UIAlertControllerSeverity {
+  init(severity: AlertSeverity) {
+    self = switch severity {
+    case .error,
+         .informational,
+         .success,
+         .warning:
+      .default
+    case .critical:
+      .critical
     }
   }
 }
