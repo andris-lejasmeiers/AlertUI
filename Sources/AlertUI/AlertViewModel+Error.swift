@@ -88,15 +88,14 @@ public extension AlertViewModel {
 
 private extension ActionStyle {
   init(recoveryOptionType: RecoveryOptionType?) {
-    switch recoveryOptionType {
+    self = switch recoveryOptionType {
     case .cancel:
-      self = .cancel
+      .cancel
     case .destructive:
-      self = .destructive
-    // swiftformat:disable:next redundantBackticks
-    case .`default`,
+      .destructive
+    case .default,
          .none:
-      self = .default
+      .default
     }
   }
 }

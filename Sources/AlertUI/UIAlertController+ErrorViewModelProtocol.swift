@@ -105,107 +105,107 @@ public extension UIAlertAction.Style {
 
 public extension UIKeyboardType {
   init(type: KeyboardType) {
-    switch type {
+    self = switch type {
     case .default:
-      self = .default
+      .default
     case .asciiCapable:
-      self = .asciiCapable
+      .asciiCapable
     case .numbersAndPunctuation:
-      self = .numbersAndPunctuation
+      .numbersAndPunctuation
     case .URL:
-      self = .URL
+      .URL
     case .numberPad:
-      self = .numberPad
+      .numberPad
     case .phonePad:
-      self = .phonePad
+      .phonePad
     case .namePhonePad:
-      self = .namePhonePad
+      .namePhonePad
     case .emailAddress:
-      self = .emailAddress
+      .emailAddress
     case .decimalPad:
-      self = .decimalPad
+      .decimalPad
     case .twitter:
-      self = .twitter
+      .twitter
     case .webSearch:
-      self = .webSearch
+      .webSearch
     case .asciiCapableNumberPad:
-      self = .asciiCapableNumberPad
+      .asciiCapableNumberPad
     }
   }
 }
 
 public extension UITextField.ViewMode {
   init(mode: ViewMode) {
-    switch mode {
+    self = switch mode {
     case .never:
-      self = .never
+      .never
     case .whileEditing:
-      self = .whileEditing
+      .whileEditing
     case .unlessEditing:
-      self = .unlessEditing
+      .unlessEditing
     case .always:
-      self = .always
+      .always
     }
   }
 }
 
 public extension UITextContentType {
   init(type: ContentType) {
-    switch type {
+    self = switch type {
     case .name:
-      self = Self.name
+      Self.name
     case .namePrefix:
-      self = Self.namePrefix
+      Self.namePrefix
     case .givenName:
-      self = Self.givenName
+      Self.givenName
     case .middleName:
-      self = Self.middleName
+      Self.middleName
     case .familyName:
-      self = Self.familyName
+      Self.familyName
     case .nameSuffix:
-      self = Self.nameSuffix
+      Self.nameSuffix
     case .nickname:
-      self = Self.nickname
+      Self.nickname
     case .jobTitle:
-      self = Self.jobTitle
+      Self.jobTitle
     case .organizationName:
-      self = Self.organizationName
+      Self.organizationName
     case .location:
-      self = Self.location
+      Self.location
     case .fullStreetAddress:
-      self = Self.fullStreetAddress
+      Self.fullStreetAddress
     case .streetAddressLine1:
-      self = Self.streetAddressLine1
+      Self.streetAddressLine1
     case .streetAddressLine2:
-      self = Self.streetAddressLine2
+      Self.streetAddressLine2
     case .addressCity:
-      self = Self.addressCity
+      Self.addressCity
     case .addressState:
-      self = Self.addressState
+      Self.addressState
     case .addressCityAndState:
-      self = Self.addressCityAndState
+      Self.addressCityAndState
     case .sublocality:
-      self = Self.sublocality
+      Self.sublocality
     case .countryName:
-      self = Self.countryName
+      Self.countryName
     case .postalCode:
-      self = Self.postalCode
+      Self.postalCode
     case .telephoneNumber:
-      self = Self.telephoneNumber
+      Self.telephoneNumber
     case .emailAddress:
-      self = Self.emailAddress
+      Self.emailAddress
     case .URL:
-      self = Self.URL
+      Self.URL
     case .creditCardNumber:
-      self = Self.creditCardNumber
+      Self.creditCardNumber
     case .username:
-      self = Self.username
+      Self.username
     case .password:
-      self = Self.password
+      Self.password
     case .newPassword:
-      self = Self.newPassword
+      Self.newPassword
     case .oneTimeCode:
-      self = Self.oneTimeCode
+      Self.oneTimeCode
     }
   }
 }
