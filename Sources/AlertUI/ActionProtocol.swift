@@ -13,7 +13,7 @@ public protocol ActionProtocol {
   var handler: (() -> Void)? { get }
 }
 
-public enum ActionStyle: Int {
+public enum ActionStyle {
   case `default`
   case cancel
   case destructive

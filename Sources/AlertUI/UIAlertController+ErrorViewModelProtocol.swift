@@ -92,7 +92,14 @@ public extension UIAlertAction {
 
 public extension UIAlertAction.Style {
   init(style: ActionStyle) {
-    self = Self(rawValue: style.rawValue) ?? .default
+    self = switch style {
+    case .default:
+      .default
+    case .cancel:
+      .cancel
+    case .destructive:
+      .destructive
+    }
   }
 }
 
