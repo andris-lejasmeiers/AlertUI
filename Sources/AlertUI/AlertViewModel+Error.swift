@@ -48,7 +48,7 @@ public extension AlertViewModel {
     if components.isEmpty {
       components.append(error.localizedDescription)
     }
-    return components.compactMap { $0 }.joined(separator: separator)
+    return components.compactMap(\.self).joined(separator: separator)
   }
 }
 
@@ -88,14 +88,15 @@ public extension AlertViewModel {
 
 private extension ActionStyle {
   init(recoveryOptionType: RecoveryOptionType?) {
-    self = switch recoveryOptionType {
-    case .cancel:
-      .cancel
-    case .destructive:
-      .destructive
-    case .default,
-         .none:
-      .default
-    }
+    self =
+      switch recoveryOptionType {
+      case .cancel:
+        .cancel
+      case .destructive:
+        .destructive
+      case .default,
+           .none:
+        .default
+      }
   }
 }
