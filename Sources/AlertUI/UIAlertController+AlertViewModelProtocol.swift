@@ -260,7 +260,7 @@ private class DelegateProxy: NSObject, UITextFieldDelegate {
   }
 }
 
-private var proxyDelegateKey: UInt8 = 0
+@MainActor private var proxyDelegateKey: UInt8 = 0
 
 private extension UITextField {
   func setDelegate(proxy: DelegateProxy) {
